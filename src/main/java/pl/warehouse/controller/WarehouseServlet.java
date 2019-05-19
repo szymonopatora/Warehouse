@@ -1,5 +1,6 @@
 package pl.warehouse.controller;
 
+import pl.warehouse.model.Tool;
 import pl.warehouse.service.ToolService;
 
 import javax.servlet.ServletException;
@@ -8,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
-@WebServlet (name = "ToolList", value = "/")
+@WebServlet(name = "ToolList", value = "/")
 public class WarehouseServlet extends HttpServlet {
 
     private static final String TOOL_NAME_VAR = "tools";
@@ -30,6 +33,8 @@ public class WarehouseServlet extends HttpServlet {
     }
 
     private void processAction(String action, Long toolId) {
+
+        List<Tool> tools = Collections.emptyList();
         switch (action) {
             case "take":
                 toolService.takeTool(toolId);
@@ -42,7 +47,7 @@ public class WarehouseServlet extends HttpServlet {
     }
 
     private void initializeTools() {
-      getServletContext().setAttribute(TOOL_NAME_VAR, toolService.getTools());
-        }
+        getServletContext().setAttribute(TOOL_NAME_VAR, toolService.getTools());
     }
 }
+

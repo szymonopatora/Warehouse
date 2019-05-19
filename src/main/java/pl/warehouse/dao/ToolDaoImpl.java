@@ -45,6 +45,7 @@ public class ToolDaoImpl implements ToolDao {
 
     private static Connection getDBConnection() {
         Connection dbConnection = null;
+
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
