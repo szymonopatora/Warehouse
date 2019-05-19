@@ -20,12 +20,29 @@ public class WarehouseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         initializeTools();
 
+        String action = req.getParameter("action");
+
+        if (action != null) {
+            processAction(action, Long.valueOf(req.getParameter("id")));
+        }
+
         req.getRequestDispatcher("/tools.jsp").forward(req, resp);
     }
 
+    private void processAction(String action, Long toolId) {
+        switch (action) {
+            case "take":
+                toolService.takeTool(toolId);
+                break;
+            case "return":
+                toolService.returnTool(toolId);
+                break;
+        }
+        initializeTools();
+    }
+
     private void initializeTools() {
-        if (getServletContext().getAttribute(TOOL_NAME_VAR) == null) {
-            getServletContext().setAttribute(TOOL_NAME_VAR, toolService.getTools());
+      getServletContext().setAttribute(TOOL_NAME_VAR, toolService.getTools());
         }
     }
 }
